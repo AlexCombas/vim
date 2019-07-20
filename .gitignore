@@ -1,0 +1,12 @@
+# Ingnore vim-plugin directory and vim-swap directory
+swap/
+plugged/
+
+# Ignore Github README
+README.md
+
+# Ignore netrw history
+.netrwhist
+
+# Ignore vim swap files
+*~

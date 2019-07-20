@@ -37,16 +37,12 @@ set directory^=~/.vim/swap//
 " Protect against crash-during-write
 set writebackup
 
-" But do not persist backup after successful write
-set nobackup
-
 " Persistent undo
 set undofile
 set undodir^=~/.vim/undo//
 
 " Fast is good right?
 set ttyfast
-set updatetime=2000
 
 " Set title, turn off bells, color column 72
 set title
@@ -95,7 +91,9 @@ set ffs=unix
 
 " Remap Leader to , and increase timeout
 let mapleader = ","
+set timeout
 set ttimeout
+set timeoutlen=100
 set ttimeoutlen=100
 
 " ,w to switch windows
@@ -107,6 +105,7 @@ nmap <leader>l :set list!<CR>
 " ,, to switch between current buffer and previous
 nnoremap <leader><leader> <c-^>
 
+" Make netrw look like NERDTree
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
@@ -116,7 +115,7 @@ let g:netrw_winsize = 20
 " ,f list all opened buffers and wait for input to switch buffer
 nnoremap <leader>f :set nomore<Bar>:ls<Bar>:set more<CR>:b<Space>
 
-" Disable arrow keys
+" Disable arrow keys in Normal Mode
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
@@ -127,12 +126,12 @@ set number
 
 set lazyredraw
 set autoread
-set history=1000
-set tabpagemax=50
+set history=100
+set tabpagemax=25
 set viminfo^=!
 set sessionoptions-=options
 set completeopt=menu,longest,preview
-set t_Co=16
+set t_Co=256
 
 inoremap <C-U> <C-G>u<C-U>
 
