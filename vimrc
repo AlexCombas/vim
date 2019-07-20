@@ -34,8 +34,9 @@ endif
 set swapfile
 set directory^=~/.vim/swap//
 
-" Protect against crash-during-write
+" Prevent crash-during-write, but delete backup after write.
 set writebackup
+set nobackup
 
 " Persistent undo
 set undofile
