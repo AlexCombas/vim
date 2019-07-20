@@ -1,6 +1,8 @@
 # Ingnore vim-plugin directory and vim-swap directory
 swap/
+backup/
 plugged/
+undodir/
 
 # Ignore Github README
 README.md

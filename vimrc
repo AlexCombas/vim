@@ -15,6 +15,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'AlessandroYorba/Alduin'
 call plug#end()
 
+" Turn on filetype recognition, highlighting, theme, and encoding
 filetype plugin indent on
 syntax enable
 colorscheme alduin 
@@ -37,10 +38,11 @@ set directory^=~/.vim/swap//
 " Prevent crash-during-write, but delete backup after write.
 set writebackup
 set nobackup
+set backupdir^=/.vim/backup//
 
 " Persistent undo
 set undofile
-set undodir^=~/.vim/undo//
+set undodir^=~/.vim/undodir//
 
 " Fast is good right?
 set ttyfast
