@@ -5,11 +5,10 @@ set smartcase  " uppercase finds only uppercase: J finds only J
 set matchpairs " jump to pair < : >, [ : ], { : }, ( : )
 set showmode   " show vim mode
 set surround   " ys cs ds S
+set commentary " gcc, gc + motion, v_gc
 
 nnoremap `. :action JumpToLastChange<CR>
 nnoremap <C-y> :action FileStructurePopup<CR>
 nnoremap <C-e> :action RecentFiles<CR>
 nnoremap == :action ReformatCode<CR>
-nnoremap cc :action CommentByLineComment<CR>
-
 
