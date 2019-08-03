@@ -12,3 +12,5 @@ nnoremap <C-y> :action FileStructurePopup<CR>
 nnoremap <C-e> :action RecentFiles<CR>
 nnoremap == :action ReformatCode<CR>
 
+set clipboard+=ideaput
+
