@@ -13,6 +13,7 @@ Plug 'ervandew/supertab'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'AlessandroYorba/Alduin'
+Plug 'tbastos/vim-lua'
 call plug#end()
 
 " Turn on filetype recognition, highlighting, theme, and encoding
