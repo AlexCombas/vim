@@ -14,6 +14,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'AlessandroYorba/Alduin'
 Plug 'tbastos/vim-lua'
+Plug 'tpope/vim-obsession'
+Plug 'dhruvasagar/vim-prosession'
+Plug 'WolfgangMehner/c-support'
 call plug#end()
 
 " Turn on filetype recognition, highlighting, theme, and encoding
@@ -21,6 +24,10 @@ filetype plugin indent on
 syntax enable
 colorscheme alduin 
 set encoding=utf-8
+
+set cin
+set ai "Autoindent
+set sw=4 sts=4 ts=4 expandtab
 
 " Copy previous indentation when autoindenting
 set autoindent

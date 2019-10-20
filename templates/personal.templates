@@ -1,0 +1,4 @@
+SetMacro( 'AUTHOR', 'Alex Combas' )
+SetMacro( 'AUTHORREF', 'agc' )
+SetMacro( 'EMAIL', 'alex@flyingcastle.net' )
+SetMacro( 'COPYRIGHT', 'Copyright (c) |YEAR|, |AUTHOR|' )
