@@ -22,7 +22,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'luochen1990/rainbow'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 call plug#end()
@@ -35,13 +35,12 @@ set t_Co=256
 set encoding=utf-8
 let mapleader = ","
 let g:rainbow_active = 1 
+let g:deoplete#enable_at_startup = 1
 
 " Improved search and deoplete settings 
 set ignorecase
 set hlsearch
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#sources = {}
-let g:deoplete#sources.java = ['jc', 'javacomplete2', 'file', 'buffer']
+set smarttab
 
 ""use TAB as the mapping
 inoremap <silent><expr> <TAB>
