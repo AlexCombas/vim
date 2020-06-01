@@ -3,7 +3,8 @@ swap/
 backup/
 plugged/
 undodir/
-session/*
+session/
+session/last_session.vim
 
 # Ignore Github README
 README.md
