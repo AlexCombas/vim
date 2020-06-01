@@ -5,39 +5,53 @@ set nocompatible
 call plug#begin('~/.vim/plugged')
 Plug 'w0rp/ale'
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'janko-m/vim-test', { 'for': 'java' }
-Plug 'tpope/vim-commentary'
 Plug 'ervandew/supertab'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'AlessandroYorba/Alduin'
+Plug 'blueshirts/darcula' 
 Plug 'tbastos/vim-lua'
+Plug 'lervag/vimtex'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'WolfgangMehner/c-support'
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
-Plug 'WolfgangMehner/c-support'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'luochen1990/rainbow'
 call plug#end()
 
 " Turn on filetype recognition, highlighting, theme, and encoding
 filetype plugin indent on
 syntax enable
-colorscheme alduin 
+colorscheme darcula
+set t_Co=256
 set encoding=utf-8
+let mapleader = ","
+let g:rainbow_active = 1 
 
-set cin
-set ai "Autoindent
-set sw=4 sts=4 ts=4 expandtab
+" Improved search, turn off highlighting with <C-L>
+set ignorecase
+set smartcase
+set hlsearch
+
+noremap <space><cr> :nohlsearch<cr>
+
+set scrolloff=3
+set sidescrolloff=5
+
+set visualbell
+set noerrorbells
+
+set clipboard=unnamedplus
 
 " Copy previous indentation when autoindenting
 set autoindent
 set backspace=indent,eol,start
-set complete-=i
 set smarttab
-
-if maparg('<C-L>', 'n') ==# ''
-  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-endif
 
 " Turn on swap files
 set swapfile
@@ -49,6 +63,7 @@ set nobackup
 set backupdir^=/.vim/backup//
 
 " Persistent undo
+set undolevels=100
 set undofile
 set undodir^=~/.vim/undodir//
 
@@ -57,16 +72,7 @@ set ttyfast
 
 " Set title, turn off bells, color column 72
 set title
-set colorcolumn=72
-
-" Improved search, turn off highlighting with <C-L>
-set ignorecase
-set smartcase
-set incsearch
-set hlsearch
-
-" Do not increment numbers in octal
-set nrformats-=octal
+set colorcolumn=120
 
 set laststatus=2
 set ruler
@@ -75,9 +81,6 @@ set wildmenu
 " Powerline helpful settings
 set showtabline=2
 set noshowmode
-
-set scrolloff=1
-set sidescrolloff=5
 
 set display+=lastline
 
@@ -94,21 +97,13 @@ set shell=/usr/bin/env\ bash
 " Airline, enable smarter tab line, fonts and theme
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme='alduin'
+let g:airline_theme='tomorrow'
 let g:airline_extensions = ['quickfix', 'netrw', 'term', 'hunks', 'branch', 'fugitiveline', 'ale', 'whitespace', 'po', 'wordcount', 'keymap']
 
 " Unix file format
+" Do not increment numbers in octal
+set nrformats-=octal
 set ffs=unix
-
-" Remap Leader to , and increase timeout
-let mapleader = ","
-set timeout
-set ttimeout
-set timeoutlen=100
-set ttimeoutlen=100
-
-" ,w to switch windows
-noremap <silent> <leader>w <C-w><C-w>
 
 " ,l to show hidden characters
 nmap <leader>l :set list!<CR>
@@ -132,24 +127,30 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
+noremap <leader>y "*y
+noremap <leader>Y "*Y
+noremap <leader>p "*p
+noremap <leader>P "*P
+
+nmap <leader>h <c-w>h
+nmap <leader>l <c-w>l
+nmap <leader>k <c-w>k
+nmap <leader>j <c-w>j
+nmap <leader>w <C-w><C-w>
+
+nmap zj o<Esc>k
+nmap zk o<Esc>j
+
 " Show line numbers
 set number
 
 set lazyredraw
 set autoread
-set history=100
+set history=500
 set tabpagemax=25
 set viminfo^=!
 set sessionoptions-=options
 set completeopt=menu,longest,preview
-set t_Co=256
-
-inoremap <C-U> <C-G>u<C-U>
-
-" Load matchit.vim
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-  runtime! macros/matchit.vim
-endif
 
 " Required for vim-javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
