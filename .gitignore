@@ -3,6 +3,7 @@ swap/
 backup/
 plugged/
 undodir/
+session/*
 
 # Ignore Github README
 README.md
@@ -12,3 +13,6 @@ README.md
 
 # Ignore vim swap files
 *~
+
+# Ignore tags file
+tags

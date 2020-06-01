@@ -7,11 +7,9 @@ Plug 'w0rp/ale'
 Plug 'airblade/vim-gitgutter'
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'janko-m/vim-test', { 'for': 'java' }
-Plug 'ervandew/supertab'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'blueshirts/darcula' 
-Plug 'tbastos/vim-lua'
 Plug 'lervag/vimtex'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'WolfgangMehner/c-support'
@@ -22,6 +20,11 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'luochen1990/rainbow'
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 call plug#end()
 
 " Turn on filetype recognition, highlighting, theme, and encoding
@@ -33,10 +36,22 @@ set encoding=utf-8
 let mapleader = ","
 let g:rainbow_active = 1 
 
-" Improved search, turn off highlighting with <C-L>
+" Improved search and deoplete settings 
 set ignorecase
-set smartcase
 set hlsearch
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#sources = {}
+let g:deoplete#sources.java = ['jc', 'javacomplete2', 'file', 'buffer']
+
+""use TAB as the mapping
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ?  "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ deoplete#mappings#manual_complete()
+function! s:check_back_space() abort "" {{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction "" }}}
 
 noremap <space><cr> :nohlsearch<cr>
 
@@ -72,7 +87,7 @@ set ttyfast
 
 " Set title, turn off bells, color column 72
 set title
-set colorcolumn=120
+set colorcolumn=100
 
 set laststatus=2
 set ruler
@@ -141,6 +156,14 @@ nmap <leader>w <C-w><C-w>
 nmap zj o<Esc>k
 nmap zk o<Esc>j
 
+" Easy compile java in vim
+autocmd FileType java set makeprg=javac\ %
+set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C.%#
+
+"Loc List
+map <leader>e :lopen<CR>
+map <leader>E :lclose<CR>
+
 " Show line numbers
 set number
 
@@ -152,15 +175,43 @@ set viminfo^=!
 set sessionoptions-=options
 set completeopt=menu,longest,preview
 
+"Ale Configuration
+" Shorten error/warning flags
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+" I have some custom icons for errors and warnings but feel free to change them.
+let g:ale_sign_error = '✘✘'
+let g:ale_sign_warning = '⚠⚠'
+
+" Disable or enable loclist at the bottom of vim 
+" Comes down to personal preferance.
+let g:ale_open_list = 0
+let g:ale_loclist = 0
+
+
+" Setup compilers for languages
+
+let g:ale_linters = {
+      \  'cs':['syntax', 'semantic', 'issues'],
+      \  'python': ['pylint'],
+      \  'java': ['javac']
+      \ }
+
 " Required for vim-javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
-" Ask for import option
-nmap <F5> <Plug>(JavaComplete-Imports-Add)
-imap <F5> <Plug>(JavaComplete-Imports-Add)
+autocmd FileType java JCEnable
+
 " Add all missing imports
 nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
 imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
 " Remove unused imports
 nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 imap <F7> <Plug>(JavaComplete-IMports-RemoveUnused)
+
+"Tagbar
+nmap <C-b> :TagbarToggle<cr>
+
+" Toggle nerdtree
+nmap <C-d> :NERDTreeToggle<CR>
+
 
