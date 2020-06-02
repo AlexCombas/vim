@@ -3,28 +3,19 @@ set nocompatible
 
 "Install plugins with vim-plug
 call plug#begin('~/.vim/plugged')
-Plug 'w0rp/ale'
+Plug 'ycm-core/YouCompleteMe'
 Plug 'airblade/vim-gitgutter'
-Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 Plug 'janko-m/vim-test', { 'for': 'java' }
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'blueshirts/darcula' 
+Plug 'blueshirts/darcula'
 Plug 'lervag/vimtex'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'WolfgangMehner/c-support'
 Plug 'tpope/vim-obsession'
-Plug 'dhruvasagar/vim-prosession'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'luochen1990/rainbow'
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'Shougo/deoplete.nvim'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
 call plug#end()
 
 " Turn on filetype recognition, highlighting, theme, and encoding
@@ -34,23 +25,12 @@ colorscheme darcula
 set t_Co=256
 set encoding=utf-8
 let mapleader = ","
-let g:rainbow_active = 1 
-let g:deoplete#enable_at_startup = 1
+let g:rainbow_active = 1
 
-" Improved search and deoplete settings 
+" Improved search, and smarter tab
 set ignorecase
 set hlsearch
 set smarttab
-
-""use TAB as the mapping
-inoremap <silent><expr> <TAB>
-    \ pumvisible() ?  "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ deoplete#mappings#manual_complete()
-function! s:check_back_space() abort "" {{{
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction "" }}}
 
 noremap <space><cr> :nohlsearch<cr>
 
@@ -65,7 +45,6 @@ set clipboard=unnamedplus
 " Copy previous indentation when autoindenting
 set autoindent
 set backspace=indent,eol,start
-set smarttab
 
 " Turn on swap files
 set swapfile
@@ -88,31 +67,26 @@ set ttyfast
 set title
 set colorcolumn=100
 
+" setup powerline and display the status bar
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
 set laststatus=2
-set ruler
-set wildmenu
-
-" Powerline helpful settings
 set showtabline=2
 set noshowmode
 
+set ruler
+
 set display+=lastline
 
-set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+set list
+set listchars=tab:▸\ ,trail:·,precedes:←,extends:→,nbsp:␣
 set fillchars+=stl:\ ,stlnc:\
 
 " Delete comment character when joining commented lines
 set formatoptions+=j
 
-setglobal tags-=./tags tags-=./tags; tags^=./tags;
-
 set shell=/usr/bin/env\ bash
-
-" Airline, enable smarter tab line, fonts and theme
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline_theme='tomorrow'
-let g:airline_extensions = ['quickfix', 'netrw', 'term', 'hunks', 'branch', 'fugitiveline', 'ale', 'whitespace', 'po', 'wordcount', 'keymap']
 
 " Unix file format
 " Do not increment numbers in octal
@@ -120,17 +94,9 @@ set nrformats-=octal
 set ffs=unix
 
 " ,l to show hidden characters
-nmap <leader>l :set list!<CR>
 
 " ,, to switch between current buffer and previous
 nnoremap <leader><leader> <c-^>
-
-" Make netrw look like NERDTree
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 20
 
 " ,f list all opened buffers and wait for input to switch buffer
 nnoremap <leader>f :set nomore<Bar>:ls<Bar>:set more<CR>:b<Space>
@@ -171,41 +137,7 @@ set autoread
 set history=500
 set tabpagemax=25
 set viminfo^=!
-set sessionoptions-=options
-set completeopt=menu,longest,preview
-
-"Ale Configuration
-" Shorten error/warning flags
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-" I have some custom icons for errors and warnings but feel free to change them.
-let g:ale_sign_error = '✘✘'
-let g:ale_sign_warning = '⚠⚠'
-
-" Disable or enable loclist at the bottom of vim 
-" Comes down to personal preferance.
-let g:ale_open_list = 0
-let g:ale_loclist = 0
-
-
-" Setup compilers for languages
-
-let g:ale_linters = {
-      \  'cs':['syntax', 'semantic', 'issues'],
-      \  'python': ['pylint'],
-      \  'java': ['javac']
-      \ }
-
-" Required for vim-javacomplete2
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-autocmd FileType java JCEnable
-
-" Add all missing imports
-nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-" Remove unused imports
-nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-imap <F7> <Plug>(JavaComplete-IMports-RemoveUnused)
+set completeopt=longest,menuone
 
 "Tagbar
 nmap <C-b> :TagbarToggle<cr>
@@ -213,4 +145,11 @@ nmap <C-b> :TagbarToggle<cr>
 " Toggle nerdtree
 nmap <C-d> :NERDTreeToggle<CR>
 
+" vim-test bindings
+" these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
+nmap <silent> t<C-n> :TestNearest<CR>
+nmap <silent> t<C-f> :TestFile<CR>
+nmap <silent> t<C-s> :TestSuite<CR>
+nmap <silent> t<C-l> :TestLast<CR>
+nmap <silent> t<C-g> :TestVisit<CR>
 

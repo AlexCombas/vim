@@ -4,7 +4,7 @@ backup/
 plugged/
 undodir/
 session/
-session/last_session.vim
+tmp/
 
 # Ignore Github README
 README.md
