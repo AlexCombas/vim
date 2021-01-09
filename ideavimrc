@@ -15,7 +15,8 @@ set surround
 set multiple-cursors
 set commentary
 set ideajoin
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
+set clipboard+=ideaput
 
 noremap <leader>y "*y
 noremap <leader>Y "*Y

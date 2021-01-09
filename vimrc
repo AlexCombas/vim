@@ -3,18 +3,15 @@ set nocompatible
 
 "Install plugins with vim-plug
 call plug#begin('~/.vim/plugged')
-Plug 'ycm-core/YouCompleteMe'
+Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'vim-syntastic/syntastic'
+Plug 'dense-analysis/ale'
 Plug 'airblade/vim-gitgutter'
-Plug 'janko-m/vim-test', { 'for': 'java' }
 Plug 'blueshirts/darcula'
-Plug 'lervag/vimtex'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'luochen1990/rainbow'
-Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 call plug#end()
 
@@ -25,7 +22,6 @@ colorscheme darcula
 set t_Co=256
 set encoding=utf-8
 let mapleader = ","
-let g:rainbow_active = 1
 
 " Improved search, and smarter tab
 set ignorecase
@@ -36,7 +32,8 @@ noremap <space><cr> :nohlsearch<cr>
 
 set scrolloff=3
 set sidescrolloff=5
-
+set splitbelow
+set splitright
 set visualbell
 set noerrorbells
 
@@ -75,6 +72,15 @@ set laststatus=2
 set showtabline=2
 set noshowmode
 
+"setup syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 set ruler
 
 set display+=lastline
@@ -93,13 +99,17 @@ set shell=/usr/bin/env\ bash
 set nrformats-=octal
 set ffs=unix
 
-" ,l to show hidden characters
-
 " ,, to switch between current buffer and previous
 nnoremap <leader><leader> <c-^>
 
 " ,f list all opened buffers and wait for input to switch buffer
 nnoremap <leader>f :set nomore<Bar>:ls<Bar>:set more<CR>:b<Space>
+
+"split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " Disable arrow keys in Normal Mode
 noremap <Up> <NOP>
@@ -121,10 +131,6 @@ nmap <leader>w <C-w><C-w>
 nmap zj o<Esc>k
 nmap zk o<Esc>j
 
-" Easy compile java in vim
-autocmd FileType java set makeprg=javac\ %
-set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C.%#
-
 "Loc List
 map <leader>e :lopen<CR>
 map <leader>E :lclose<CR>
@@ -137,10 +143,10 @@ set autoread
 set history=500
 set tabpagemax=25
 set viminfo^=!
-set completeopt=longest,menuone
 
-"Tagbar
-nmap <C-b> :TagbarToggle<cr>
+" Improve menu completion
+set completeopt=longest,menuone
+:inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Toggle nerdtree
 nmap <C-d> :NERDTreeToggle<CR>
