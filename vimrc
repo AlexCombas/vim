@@ -12,7 +12,6 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 call plug#end()
 
 " Turn on filetype recognition, highlighting, theme, and encoding
@@ -65,9 +64,9 @@ set title
 set colorcolumn=100
 
 " setup powerline and display the status bar
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
+"python3 from powerline.vim import setup as powerline_setup
+"python3 powerline_setup()
+"python3 del powerline_setup
 set laststatus=2
 set showtabline=2
 set noshowmode
@@ -80,6 +79,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['pylint']
 
 set ruler
 
@@ -149,7 +149,12 @@ set completeopt=longest,menuone
 :inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Toggle nerdtree
-nmap <C-d> :NERDTreeToggle<CR>
+nmap <C-d> :Vexplore<CR>
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
 
 " vim-test bindings
 " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
