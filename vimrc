@@ -4,7 +4,7 @@ set nocompatible
 "Install plugins with vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'vim-syntastic/syntastic'
+Plug 'powerline/powerline'
 Plug 'dense-analysis/ale'
 Plug 'airblade/vim-gitgutter'
 Plug 'blueshirts/darcula'
@@ -64,22 +64,12 @@ set title
 set colorcolumn=100
 
 " setup powerline and display the status bar
-"python3 from powerline.vim import setup as powerline_setup
-"python3 powerline_setup()
-"python3 del powerline_setup
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
 set laststatus=2
 set showtabline=2
 set noshowmode
-
-"setup syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['pylint']
 
 set ruler
 
@@ -104,12 +94,6 @@ nnoremap <leader><leader> <c-^>
 
 " ,f list all opened buffers and wait for input to switch buffer
 nnoremap <leader>f :set nomore<Bar>:ls<Bar>:set more<CR>:b<Space>
-
-"split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
 
 " Disable arrow keys in Normal Mode
 noremap <Up> <NOP>
@@ -155,12 +139,4 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
-
-" vim-test bindings
-" these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
-nmap <silent> t<C-n> :TestNearest<CR>
-nmap <silent> t<C-f> :TestFile<CR>
-nmap <silent> t<C-s> :TestSuite<CR>
-nmap <silent> t<C-l> :TestLast<CR>
-nmap <silent> t<C-g> :TestVisit<CR>
 
