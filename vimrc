@@ -4,8 +4,10 @@ set nocompatible
 "Install plugins with vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'davidhalter/jedi-vim'
 Plug 'powerline/powerline'
 Plug 'dense-analysis/ale'
+Plug 'sjl/gundo.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'blueshirts/darcula'
 Plug 'tpope/vim-obsession'
@@ -22,12 +24,33 @@ set t_Co=256
 set encoding=utf-8
 let mapleader = ","
 
-" Improved search, and smarter tab
+" Improved search, highlight search, search as typing 
+" and remove hightlight with space+return
 set ignorecase
 set hlsearch
-set smarttab
-
+set incsearch
 noremap <space><cr> :nohlsearch<cr>
+
+" Fix tabs to always use 4 spaces
+set tabstop=4
+set softtabstop=4
+set expandtab
+
+" enable folding
+" space key opens and closes folds
+set foldenable
+set foldlevelstart=10
+set foldnestmax=10
+set foldmethod=indent
+nnoremap <space> za
+
+" toggle gundo
+nnoremap <leader>u :GundoToggle<CR>
+
+" use menu to cycle through matches
+set wildmenu
+
+set showmatch
 
 set scrolloff=3
 set sidescrolloff=5
@@ -70,6 +93,8 @@ python3 del powerline_setup
 set laststatus=2
 set showtabline=2
 set noshowmode
+
+let b:ale_linters = ['flake8']
 
 set ruler
 
@@ -122,11 +147,11 @@ map <leader>E :lclose<CR>
 " Show line numbers
 set number
 
+" Do not redraw screen during macros
 set lazyredraw
-set autoread
+
 set history=500
 set tabpagemax=25
-set viminfo^=!
 
 " Improve menu completion
 set completeopt=longest,menuone
